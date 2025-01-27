@@ -1,0 +1,15 @@
+*.pyc
+__pycache__/
+*.csv
+datasets/
+.vscode/
+*.egg-info/
+data/
+models/
+results/
+_build/
+build/
+logs/
+node_modules/
+mlruns/
+*.zip

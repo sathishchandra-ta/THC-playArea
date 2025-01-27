@@ -1,0 +1,46 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches:
+      - test
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  docker-build-push:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Checkout repository
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Display directory tree before build
+      run: |
+        sudo apt-get install tree
+        tree
+
+    # Step 2: Log in to DockerHub
+    - name: Log in to DockerHub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    # Step 3: Build the Docker image
+    - name: Build Docker image
+      run: |
+        IMAGE_NAME="santhoshramgk/mle_training"
+        TAG="v4"
+        docker build -t $IMAGE_NAME:$TAG -f docker/Dockerfile .
+        echo "Docker image built with tag: $TAG"
+
+    # Step 4: Push the Docker image to DockerHub
+    - name: Push Docker image to DockerHub
+      run: |
+        IMAGE_NAME="santhoshramgk/mle_training"
+        TAG="v4"
+        docker push $IMAGE_NAME:$TAG
+        echo "Docker image pushed to DockerHub: $IMAGE_NAME:$TAG"
