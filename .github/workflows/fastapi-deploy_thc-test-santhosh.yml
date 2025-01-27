@@ -7,7 +7,7 @@ name: Build and deploy Python app to Azure Web App - THC-test-santhosh
 on:
   push:
     branches:
-      - fastapi-deploy
+      - main
     paths-ignore:
       - frontend-ts/**
   workflow_dispatch:
